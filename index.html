@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f9f6">
+    <meta name="description" content="ExpiryAlert helps you track inventory, expiry dates and waste.">
+    <title>ExpiryAlert — Smart Expiry Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2>✓ Expiry<span>Alert</span></h2>
+
+        <p class="menu-title">WORKSPACE</p>
+
+        <nav>
+            <a href="#" class="nav-link active" id="dashboardNav">
+                ▦ Dashboard
+            </a>
+
+            <a href="#" class="nav-link" id="inventoryNav">
+                ▤ Inventory
+            </a>
+
+            <a href="#" class="nav-link" id="analyticsNav">
+                ▥ Analytics
+            </a>
+
+            <a href="#" class="nav-link" id="wasteNav">
+                ♻ Waste Tracker
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <strong>Track Smart. Waste Less.</strong>
+            <p>Manage expiry dates in one place.</p>
+        </div>
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- DASHBOARD PAGE -->
+        <section id="dashboardPage" class="page-section">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">OVERVIEW</p>
+                    <h1>Good day 👋</h1>
+                    <p class="subtitle">
+                        Here's what's happening with your inventory.
+                    </p>
+                </div>
+
+                <button class="add-button" id="addItemBtn" type="button">
+                    + Add Item
+                </button>
+            </header>
+
+            <!-- DASHBOARD STATS -->
+            <section class="stats-grid">
+
+                <article class="stat-card">
+                    <p>Total Items</p>
+                    <h2 id="totalItems">0</h2>
+                    <span>Items in inventory</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Expiring Soon</p>
+                    <h2 id="expiringItems">0</h2>
+                    <span>Within 7 days</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Already Expired</p>
+                    <h2 id="expiredItems">0</h2>
+                    <span>Need attention</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Items Wasted</p>
+                    <h2 id="wastedItems">0</h2>
+                    <span>Recorded waste</span>
+                </article>
+
+            </section>
+
+            <!-- RECENT ITEMS -->
+            <section class="content-card">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Items to Check</h2>
+                        <p>Keep track of upcoming expiry dates.</p>
+                    </div>
+
+                    <button
+                        class="view-button"
+                        id="viewInventoryBtn"
+                        type="button"
+                    >
+                        View Inventory →
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ITEM</th>
+                                <th>CATEGORY</th>
+                                <th>EXPIRY DATE</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="itemsTable">
+                            <tr>
+                                <td colspan="4" class="empty-message">
+                                    No items yet. Add your first item!
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- INVENTORY PAGE -->
+        <section id="inventoryPage" class="page-section hidden">
+
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">MANAGE YOUR ITEMS</p>
+                    <h1>Inventory</h1>
+                    <p class="subtitle">
+                        Search, filter and manage your inventory.
+                    </p>
+                </div>
+
+                <button
+                    class="add-button"
+                    id="inventoryAddBtn"
+                    type="button"
+                >
+                    + Add Item
+                </button>
+            </header>
+
+            <!-- SEARCH AND FILTERS -->
+            <section class="content-card inventory-card">
+
+                <div class="inventory-toolbar">
+
+                    <div class="search-wrapper">
+                        <label for="inventorySearch">Search items</label>
+                        <input
+                            type="search"
+                            id="inventorySearch"
+                            placeholder="Search by item name..."
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <div class="filter-wrapper">
+                        <label for="categoryFilter">Category</label>
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                            <option value="Food">Food</option>
+                            <option value="Personal care">Personal care</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Medicine">Medicine</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-wrapper">
+                        <label for="statusFilter">Expiry Status</label>
+                        <select id="statusFilter">
+                            <option value="all">All Statuses</option>
+                            <option value="Expired">Expired</option>
+                            <option value="Expiring Soon">Expiring Soon</option>
+                            <option value="Not Soon">Not Soon</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-wrapper">
+                        <label for="sortInventory">Sort by</label>
+                        <select id="sortInventory">
+                            <option value="expiryAsc">
+                                Earliest Expiry
+                            </option>
+                            <option value="expiryDesc">
+                                Latest Expiry
+                            </option>
+                            <option value="nameAsc">Name: A–Z</option>
+                            <option value="nameDesc">Name: Z–A</option>
+                            <option value="quantityDesc">
+                                Quantity: Highest
+                            </option>
+                            <option value="quantityAsc">
+                                Quantity: Lowest
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- INVENTORY TABLE -->
+                <div class="section-heading inventory-heading">
+                    <div>
+                        <h2>All Items</h2>
+                        <p>Update or remove items whenever needed.</p>
+                    </div>
+
+                    <span id="inventoryCount">0 items</span>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ITEM NAME</th>
+                                <th>CATEGORY</th>
+                                <th>QUANTITY</th>
+                                <th>EXPIRY DATE</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inventoryTable">
+                            <tr>
+                                <td colspan="6" class="empty-message">
+                                    Your inventory will appear here.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p id="inventoryEmptyMessage" class="empty-message hidden">
+                    No items match your search or filters.
+                </p>
+
+            </section>
+
+        </section>
+
+
+        
+<!-- ANALYTICS PAGE -->
+<section id="analyticsPage" class="page-section hidden">
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">INSIGHTS</p>
+            <h1>Analytics</h1>
+            <p class="subtitle">
+                Understand your expiry and inventory trends.
+            </p>
+        </div>
+    </header>
+
+    <section class="stats-grid analytics-stats">
+        <article class="stat-card">
+            <p>Active Items</p>
+            <h2 id="analyticsTotal">0</h2>
+            <span>Items in inventory</span>
+        </article>
+
+        <article class="stat-card">
+            <p>Expired</p>
+            <h2 id="analyticsExpired">0</h2>
+            <span>Need attention</span>
+        </article>
+
+        <article class="stat-card">
+            <p>Expiring Soon</p>
+            <h2 id="analyticsExpiring">0</h2>
+            <span>Within 7 days</span>
+        </article>
+
+        <article class="stat-card">
+            <p>Categories</p>
+            <h2 id="analyticsCategories">0</h2>
+            <span>Categories in use</span>
+        </article>
+    </section>
+
+    <section class="content-card">
+        <div class="section-heading">
+            <div>
+                <h2>Category Breakdown</h2>
+                <p>Items in each category.</p>
+            </div>
+        </div>
+
+        <div id="categoryBreakdown">
+            <p class="empty-message">No inventory data available yet.</p>
+        </div>
+    </section>
+
+    <section class="content-card">
+        <div class="section-heading">
+            <div>
+                <h2>Expiry Overview</h2>
+                <p>Current expiry status of your inventory.</p>
+            </div>
+        </div>
+
+        <div id="expiryBreakdown">
+            <p class="empty-message">No inventory data available yet.</p>
+        </div>
+    </section>
+</section>
+
+
+
+        <!-- WASTE TRACKER PLACEHOLDER -->
+        <section id="wastePage" class="page-section hidden">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">REDUCE WASTE</p>
+                    <h1>Waste Tracker</h1>
+                    <p class="subtitle">
+                        Track items that have been wasted.
+                    </p>
+                </div>
+            </header>
+
+          
+<section class="stats-grid">
+    <article class="stat-card">
+        <p>Total Wasted Items</p>
+        <h2 id="wasteTotal">0</h2>
+        <span>Items recorded as wasted</span>
+    </article>
+
+    <article class="stat-card">
+        <p>Wasted Quantity</p>
+        <h2 id="wasteQuantity">0</h2>
+        <span>Total quantity wasted</span>
+    </article>
+</section>
+
+<section class="content-card">
+    <h2>Waste History</h2>
+    <p>Items marked as wasted will appear here.</p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="wasteTable"></tbody>
+        </table>
+
+        <p id="wasteEmptyMessage" class="empty-message">
+            No wasted items recorded yet.
+        </p>
+    </div>
+</section>
+
+
+        <!-- FOOTER -->
+        <footer>
+            ExpiryAlert · Smart inventory management
+        </footer>
+
+    </main>
+
+
+    <!-- ADD / EDIT ITEM POPUP -->
+    <div
+        class="modal-overlay hidden"
+        id="itemModal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Add New Item</h2>
+                    <p id="modalDescription">
+                        Enter your item's details below.
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    class="close-modal"
+                    id="closeModal"
+                    aria-label="Close popup"
+                >
+                    &times;
+                </button>
+            </div>
+
+            <form id="itemForm">
+
+                <label for="itemName">Item Name *</label>
+                <input
+                    id="itemName"
+                    type="text"
+                    placeholder="e.g. Milk"
+                    maxlength="80"
+                    required
+                >
+
+                <div class="form-row">
+
+                    <div>
+                        <label for="itemCategory">Category *</label>
+
+                        <select id="itemCategory" required>
+                            <option value="Food">Food</option>
+                            <option value="Personal care">Personal care</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Medicine">Medicine</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="itemQuantity">Quantity *</label>
+
+                        <input
+                            id="itemQuantity"
+                            type="number"
+                            min="1"
+                            max="100000"
+                            step="1"
+                            value="1"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <label for="itemExpiry">Expiry Date *</label>
+                <input id="itemExpiry" type="date" required>
+
+                <label for="itemNotes">Notes (optional)</label>
+                <textarea
+                    id="itemNotes"
+                    rows="3"
+                    maxlength="240"
+                    placeholder="Any extra details..."
+                ></textarea>
+
+                <p
+                    id="formError"
+                    class="form-error hidden"
+                    role="alert"
+                ></p>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-button"
+                        id="cancelModal"
+                    >
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="save-button" id="saveItemBtn">
+                        Save Item
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
